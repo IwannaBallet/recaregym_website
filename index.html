@@ -1,0 +1,1367 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="리케어짐 – 체형교정·재활·PT 전문 피트니스 센터. 전문 트레이너와 함께 1:1 맞춤 케어." />
+  <title>ReCare GYM | 리케어짐</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" />
+
+  <style>
+    /* ==============================  RESET & VARIABLES  ============================== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --yellow:       #ffce4c;
+      --yellow-dark:  #e6b500;
+      --yellow-light: #fff9e6;
+      --dark:         #111827;
+      --dark2:        #1f2937;
+      --dark3:        #374151;
+      --gray:         #6b7280;
+      --gray-light:   #f9fafb;
+      --gray-mid:     #e5e7eb;
+      --white:        #ffffff;
+      --danger:       #ef4444;
+      --success:      #22c55e;
+      --radius:       12px;
+      --radius-lg:    20px;
+      --shadow:       0 4px 20px rgba(0,0,0,0.08);
+      --shadow-lg:    0 8px 40px rgba(0,0,0,0.14);
+      --transition:   0.22s ease;
+    }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body { font-family: 'Noto Sans KR', sans-serif; color: var(--dark); background: var(--white); line-height: 1.7; }
+    a { text-decoration: none; color: inherit; }
+    button { cursor: pointer; border: none; background: none; font-family: inherit; }
+    ul, ol { list-style: none; }
+    img { max-width: 100%; display: block; }
+
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+    /* ==============================  HEADER  ============================== */
+    .header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--gray-mid);
+      transition: box-shadow var(--transition);
+    }
+    .header.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,0.10); }
+    .header__inner { display: flex; align-items: center; justify-content: space-between; height: 66px; }
+
+    .header__logo {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 900; font-size: 1.45rem; letter-spacing: -0.5px;
+    }
+    .logo-re   { color: var(--yellow-dark); }
+    .logo-care { color: var(--dark); }
+    .logo-gym  { color: var(--dark); font-weight: 700; letter-spacing: 1px; font-size: 1.1rem; margin-left: 2px; }
+
+    .header__nav .nav__list { display: flex; align-items: center; gap: 4px; }
+    .nav__link {
+      padding: 8px 14px; font-size: 0.88rem; font-weight: 500;
+      color: var(--dark3); border-radius: 8px; transition: all var(--transition);
+    }
+    .nav__link:hover { color: var(--dark); background: var(--yellow-light); }
+
+    .nav__cta {
+      margin-left: 8px; padding: 9px 20px;
+      background: var(--yellow); color: var(--dark);
+      border-radius: var(--radius); font-size: 0.88rem; font-weight: 700;
+      transition: all var(--transition);
+    }
+    .nav__cta:hover { background: var(--yellow-dark); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(255,206,76,0.4); }
+
+    .header__hamburger {
+      display: none; flex-direction: column; gap: 5px; padding: 8px;
+    }
+    .header__hamburger span {
+      display: block; width: 22px; height: 2px;
+      background: var(--dark); border-radius: 2px; transition: all var(--transition);
+    }
+    .header__hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .header__hamburger.open span:nth-child(2) { opacity: 0; }
+    .header__hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    @media (max-width: 768px) {
+      .header__hamburger { display: flex; }
+      .header__nav {
+        position: absolute; top: 66px; left: 0; right: 0;
+        background: var(--white); border-bottom: 1px solid var(--gray-mid);
+        padding: 16px 24px 20px; display: none;
+      }
+      .header__nav.open { display: block; }
+      .nav__list { flex-direction: column; align-items: flex-start; gap: 4px; }
+      .nav__cta { margin-left: 0; margin-top: 8px; display: inline-block; }
+    }
+
+    /* ==============================  HERO  ============================== */
+    .hero {
+      background: linear-gradient(135deg, rgba(17,24,39,0.88) 0%, rgba(17,24,39,0.92) 100%), 
+                  url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1600&h=900&fit=crop') center/cover;
+      padding: 140px 0 80px;
+      position: relative; overflow: hidden;
+      min-height: 600px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .hero__video-bg {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      object-fit: cover;
+      z-index: 0;
+    }
+    
+    .hero__overlay {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: linear-gradient(135deg, rgba(17,24,39,0.88) 0%, rgba(17,24,39,0.92) 100%);
+      z-index: 1;
+      pointer-events: none;
+    }
+    
+    .hero::before {
+      content: '';
+      position: absolute; top: -60px; right: -60px;
+      width: 480px; height: 480px;
+      background: radial-gradient(circle, rgba(255,206,76,0.18) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 2;
+    }
+    .hero::after {
+      content: '';
+      position: absolute; bottom: -80px; left: -80px;
+      width: 360px; height: 360px;
+      background: radial-gradient(circle, rgba(255,206,76,0.10) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .hero__inner { position: relative; z-index: 3; }
+
+    .hero__eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(255,206,76,0.15); border: 1px solid rgba(255,206,76,0.3);
+      color: var(--yellow); padding: 6px 16px; border-radius: 100px;
+      font-size: 0.82rem; font-weight: 600; letter-spacing: 0.5px;
+      margin-bottom: 24px;
+    }
+    .hero__eyebrow i { font-size: 0.78rem; }
+
+    .hero__title {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: clamp(2.2rem, 5vw, 3.4rem);
+      font-weight: 900; color: var(--white);
+      line-height: 1.25; letter-spacing: -1px;
+      margin-bottom: 20px;
+    }
+    .hero__title em {
+      color: var(--yellow); font-style: normal;
+      position: relative;
+    }
+
+    .hero__sub {
+      font-size: 1.05rem; color: rgba(255,255,255,0.65);
+      max-width: 480px; margin-bottom: 40px; line-height: 1.8;
+    }
+
+    .hero__actions { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 56px; }
+
+    .btn-hero-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--yellow); color: var(--dark);
+      padding: 14px 28px; border-radius: var(--radius);
+      font-weight: 700; font-size: 0.95rem;
+      transition: all var(--transition);
+    }
+    .btn-hero-primary:hover { background: var(--yellow-dark); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255,206,76,0.4); }
+
+    .btn-hero-outline {
+      display: inline-flex; align-items: center; gap: 8px;
+      border: 2px solid rgba(255,255,255,0.25); color: rgba(255,255,255,0.85);
+      padding: 14px 28px; border-radius: var(--radius);
+      font-weight: 600; font-size: 0.95rem;
+      transition: all var(--transition);
+    }
+    .btn-hero-outline:hover { border-color: rgba(255,255,255,0.6); color: var(--white); }
+
+    .hero__stats {
+      display: flex; gap: 32px; flex-wrap: wrap;
+      padding-top: 40px; border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    .hero__stat-num {
+      display: block; font-family: 'Montserrat', sans-serif;
+      font-size: 2rem; font-weight: 800; color: var(--yellow); line-height: 1.1;
+    }
+    .hero__stat-label { font-size: 0.82rem; color: rgba(255,255,255,0.5); margin-top: 2px; }
+
+    @media (max-width: 600px) {
+      .hero { padding: 120px 0 60px; }
+      .hero__stats { gap: 20px; }
+      .hero__stat-num { font-size: 1.6rem; }
+    }
+
+    /* ==============================  TRAINERS SECTION  ============================== */
+    .trainers {
+      padding: 80px 0 100px;
+      background: var(--gray-light);
+    }
+
+    .section-header { text-align: center; margin-bottom: 48px; }
+    .section-eyebrow {
+      display: inline-block;
+      font-size: 0.78rem; font-weight: 700; letter-spacing: 2px;
+      color: var(--yellow-dark); text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 800; color: var(--dark);
+      letter-spacing: -0.5px; line-height: 1.3;
+      margin-bottom: 14px;
+    }
+    .section-sub { font-size: 0.95rem; color: var(--gray); max-width: 480px; margin: 0 auto; }
+
+    .trainers-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 20px;
+    }
+
+    /* Trainer Card */
+    .trainer-card {
+      background: var(--white); border-radius: var(--radius-lg);
+      box-shadow: var(--shadow); overflow: hidden;
+      transition: transform var(--transition), box-shadow var(--transition);
+      display: flex; flex-direction: column;
+    }
+    .trainer-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+
+    .tc__photo-wrap {
+      width: 100%; height: 200px; overflow: hidden;
+      background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .tc__photo {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+    .trainer-card:hover .tc__photo {
+      transform: scale(1.08);
+    }
+
+    .tc__avatar-wrap {
+      padding: 28px 24px 0;
+      display: flex; align-items: center; gap: 16px;
+    }
+    .tc__avatar {
+      width: 60px; height: 60px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.15rem; font-weight: 800; color: var(--dark);
+      flex-shrink: 0;
+    }
+    .tc__avatar img {
+      width: 100%; height: 100%; border-radius: 50%; object-fit: cover;
+    }
+    .tc__name {
+      font-size: 1.05rem; font-weight: 700; color: var(--dark);
+      margin-bottom: 2px;
+    }
+    .tc__role-badge {
+      display: inline-block; font-size: 0.72rem; font-weight: 600;
+      color: var(--gray); letter-spacing: 0.3px;
+    }
+
+    .tc__body { padding: 16px 24px 24px; display: flex; flex-direction: column; flex: 1; }
+
+    .tc__tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+    .tc__tag {
+      padding: 3px 10px; background: var(--yellow-light);
+      border-radius: 100px; font-size: 0.72rem; font-weight: 600;
+      color: var(--yellow-dark); border: 1px solid rgba(230,181,0,0.2);
+    }
+
+    .tc__intro {
+      font-size: 0.85rem; color: var(--gray); line-height: 1.65;
+      margin-bottom: 20px; flex: 1;
+    }
+
+    .tc__book-btn {
+      width: 100%; padding: 11px;
+      background: var(--dark); color: var(--white);
+      border-radius: var(--radius); font-size: 0.88rem; font-weight: 700;
+      transition: all var(--transition);
+      display: flex; align-items: center; justify-content: center; gap: 7px;
+    }
+    .tc__book-btn:hover {
+      background: var(--yellow); color: var(--dark);
+    }
+    .tc__book-btn i { font-size: 0.82rem; }
+
+    /* ==============================  FEATURES SECTION  ============================== */
+    .features {
+      padding: 100px 0 80px;
+      background: var(--white);
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px;
+    }
+
+    .feature-card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: all var(--transition);
+    }
+    .feature-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .feature-image {
+      width: 100%; height: 180px; overflow: hidden;
+      background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
+    }
+    .feature-image img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+    .feature-card:hover .feature-image img {
+      transform: scale(1.1);
+    }
+
+    .feature-card > div:last-child {
+      padding: 24px;
+    }
+
+    .feature-title {
+      font-size: 1.1rem; font-weight: 700; color: var(--dark);
+      margin-bottom: 10px;
+    }
+
+    .feature-desc {
+      font-size: 0.88rem; color: var(--gray); line-height: 1.6;
+    }
+
+    /* ==============================  FOOTER  ============================== */
+    .footer {
+      background: var(--dark); color: rgba(255,255,255,0.75);
+      padding: 56px 0 36px;
+    }
+    .footer__inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 40px; margin-bottom: 48px;
+    }
+    .footer__logo {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 900; font-size: 1.5rem; letter-spacing: -0.5px;
+      margin-bottom: 12px;
+    }
+    .footer__logo .logo-re   { color: var(--yellow); }
+    .footer__logo .logo-care { color: rgba(255,255,255,0.9); }
+    .footer__logo .logo-gym  { color: rgba(255,255,255,0.9); font-size: 1.1rem; }
+    .footer__tagline { font-size: 0.84rem; line-height: 1.65; color: rgba(255,255,255,0.5); }
+
+    .footer__heading {
+      font-size: 0.78rem; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--yellow);
+      margin-bottom: 16px;
+    }
+    .footer__info-list { display: flex; flex-direction: column; gap: 10px; }
+    .footer__info-item {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: 0.85rem; line-height: 1.5;
+    }
+    .footer__info-item i { color: var(--yellow); font-size: 0.8rem; margin-top: 3px; flex-shrink: 0; }
+
+    .footer__sns { display: flex; gap: 10px; flex-wrap: wrap; }
+    .footer__sns-link {
+      display: flex; align-items: center; gap: 8px;
+      padding: 9px 16px; border-radius: var(--radius);
+      border: 1px solid rgba(255,255,255,0.15);
+      font-size: 0.82rem; font-weight: 600; color: rgba(255,255,255,0.8);
+      transition: all var(--transition);
+    }
+    .footer__sns-link:hover { border-color: var(--yellow); color: var(--yellow); background: rgba(255,206,76,0.08); }
+    .footer__sns-link i { font-size: 1rem; }
+
+    .footer__bottom {
+      padding-top: 28px; border-top: 1px solid rgba(255,255,255,0.08);
+      text-align: center; font-size: 0.78rem; color: rgba(255,255,255,0.3);
+    }
+
+    @media (max-width: 900px) {
+      .footer__inner { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 580px) {
+      .footer__inner { grid-template-columns: 1fr; gap: 32px; }
+    }
+
+    /* ==============================  BOOKING MODAL  ============================== */
+    .modal-overlay {
+      position: fixed; inset: 0; z-index: 2000;
+      background: rgba(0,0,0,0.65); backdrop-filter: blur(4px);
+      display: flex; align-items: center; justify-content: center;
+      padding: 20px;
+      opacity: 0; pointer-events: none; transition: opacity 0.22s ease;
+    }
+    .modal-overlay.open { opacity: 1; pointer-events: all; }
+
+    .modal {
+      background: var(--white); border-radius: var(--radius-lg);
+      width: 100%; max-width: 520px; max-height: 90vh;
+      overflow-y: auto; box-shadow: var(--shadow-lg);
+      transform: translateY(16px); transition: transform 0.22s ease;
+    }
+    .modal-overlay.open .modal { transform: translateY(0); }
+
+    .modal__header {
+      padding: 24px 28px 0;
+      display: flex; align-items: flex-start; justify-content: space-between;
+      position: sticky; top: 0; background: var(--white);
+      border-bottom: 1px solid var(--gray-mid); padding-bottom: 20px;
+      z-index: 1;
+    }
+    .modal__title { font-size: 0.78rem; color: var(--gray); font-weight: 500; margin-bottom: 3px; }
+    .modal__trainer-name { font-size: 1.15rem; font-weight: 800; color: var(--dark); }
+
+    .modal__close {
+      width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
+      background: var(--gray-light); border-radius: 50%;
+      color: var(--gray); font-size: 1rem; flex-shrink: 0;
+      transition: all var(--transition);
+    }
+    .modal__close:hover { background: var(--gray-mid); color: var(--dark); }
+
+    /* Step indicator */
+    .step-indicator {
+      display: flex; align-items: center; justify-content: center;
+      padding: 20px 28px 0; gap: 0;
+    }
+    .step-dot {
+      width: 30px; height: 30px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.78rem; font-weight: 700;
+      background: var(--gray-mid); color: var(--gray);
+      transition: all var(--transition); flex-shrink: 0;
+    }
+    .step-dot.active { background: var(--yellow); color: var(--dark); }
+    .step-dot.done { background: var(--dark); color: var(--white); }
+    .step-line { flex: 1; height: 2px; background: var(--gray-mid); max-width: 60px; transition: background var(--transition); }
+    .step-line.done { background: var(--dark); }
+    .step-label {
+      font-size: 0.7rem; color: var(--gray); text-align: center;
+      margin-top: 6px; font-weight: 500;
+    }
+    .step-item { display: flex; flex-direction: column; align-items: center; }
+
+    .step-indicator-wrap { padding: 20px 28px 0; }
+    .step-indicator-row { display: flex; align-items: center; }
+    .step-indicator-labels { display: flex; justify-content: space-between; padding: 6px 4px 0; }
+    .step-indicator-labels span { font-size: 0.7rem; color: var(--gray); font-weight: 500; flex: 1; text-align: center; }
+
+    /* Step panels */
+    .step-panel { display: none; padding: 24px 28px 28px; }
+    .step-panel.active { display: block; }
+
+    .form-label {
+      display: block; font-size: 0.82rem; font-weight: 600;
+      color: var(--dark2); margin-bottom: 8px;
+    }
+    .form-label span { color: var(--danger); margin-left: 2px; }
+
+    .form-input, .form-select, .form-textarea {
+      width: 100%; padding: 11px 14px;
+      border: 1.5px solid var(--gray-mid); border-radius: var(--radius);
+      font-family: inherit; font-size: 0.9rem; color: var(--dark);
+      transition: border-color var(--transition), box-shadow var(--transition);
+      background: var(--white);
+      appearance: none;
+    }
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      outline: none; border-color: var(--yellow-dark);
+      box-shadow: 0 0 0 3px rgba(255,206,76,0.18);
+    }
+    .form-textarea { resize: vertical; min-height: 80px; }
+    .form-group { margin-bottom: 16px; }
+
+    .date-input-wrap { position: relative; }
+    .date-input-wrap i {
+      position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+      color: var(--gray); pointer-events: none; font-size: 0.9rem;
+    }
+
+    /* Time slots */
+    .slot-label {
+      font-size: 0.82rem; font-weight: 600; color: var(--dark2);
+      margin: 20px 0 10px;
+    }
+    .time-slots-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;
+    }
+    .time-slot {
+      padding: 9px 4px; border: 1.5px solid var(--gray-mid);
+      border-radius: var(--radius); font-size: 0.82rem; font-weight: 600;
+      color: var(--dark3); text-align: center;
+      transition: all var(--transition); cursor: pointer;
+      background: var(--white);
+    }
+    .time-slot:hover:not(:disabled) { border-color: var(--yellow-dark); background: var(--yellow-light); color: var(--dark); }
+    .time-slot.selected { background: var(--yellow); border-color: var(--yellow-dark); color: var(--dark); }
+    .time-slot:disabled, .time-slot.booked { background: var(--gray-light); color: var(--gray-mid); cursor: not-allowed; border-color: var(--gray-mid); }
+    .time-slot.booked { color: var(--gray); }
+    .time-slot small { display: block; font-size: 0.65rem; font-weight: 500; }
+
+    .slot-hint { font-size: 0.78rem; color: var(--gray); margin-bottom: 6px; }
+
+    /* Confirm summary */
+    .confirm-summary {
+      background: var(--gray-light); border-radius: var(--radius);
+      padding: 20px; margin-bottom: 20px;
+    }
+    .confirm-row {
+      display: flex; justify-content: space-between; align-items: baseline;
+      padding: 8px 0; border-bottom: 1px solid var(--gray-mid);
+      font-size: 0.88rem;
+    }
+    .confirm-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .confirm-row label { color: var(--gray); font-weight: 500; }
+    .confirm-row span { font-weight: 600; color: var(--dark); text-align: right; max-width: 60%; }
+
+    /* Checkbox */
+    .checkbox-wrap { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 20px; }
+    .checkbox-wrap input[type="checkbox"] {
+      width: 18px; height: 18px; margin-top: 2px;
+      accent-color: var(--yellow-dark); flex-shrink: 0;
+    }
+    .checkbox-wrap label { font-size: 0.82rem; color: var(--gray); line-height: 1.5; }
+
+    /* Modal CTA */
+    .btn-modal-primary {
+      width: 100%; padding: 14px;
+      background: var(--yellow); color: var(--dark);
+      border-radius: var(--radius); font-weight: 700; font-size: 0.95rem;
+      transition: all var(--transition);
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .btn-modal-primary:hover:not(:disabled) { background: var(--yellow-dark); }
+    .btn-modal-primary:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    .btn-modal-back {
+      width: 100%; padding: 12px;
+      border: 1.5px solid var(--gray-mid); color: var(--gray);
+      border-radius: var(--radius); font-weight: 600; font-size: 0.88rem;
+      margin-top: 10px; transition: all var(--transition);
+    }
+    .btn-modal-back:hover { border-color: var(--dark3); color: var(--dark); }
+
+    /* Success */
+    .success-panel {
+      text-align: center; padding: 40px 28px;
+    }
+    .success-icon {
+      width: 72px; height: 72px; border-radius: 50%;
+      background: var(--yellow); color: var(--dark);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 20px;
+      font-size: 1.8rem;
+    }
+    .success-title { font-size: 1.3rem; font-weight: 800; color: var(--dark); margin-bottom: 10px; }
+    .success-msg { font-size: 0.88rem; color: var(--gray); line-height: 1.7; margin-bottom: 24px; }
+    .success-note {
+      background: var(--yellow-light); border-radius: var(--radius);
+      padding: 14px 18px; font-size: 0.82rem; color: var(--dark3);
+      line-height: 1.6; margin-bottom: 24px; text-align: left;
+    }
+    .success-note strong { color: var(--dark); }
+
+    /* ==============================  TOAST  ============================== */
+    #toastContainer {
+      position: fixed; bottom: 24px; right: 24px;
+      z-index: 9999; display: flex; flex-direction: column; gap: 8px;
+    }
+    .toast {
+      background: var(--dark2); color: var(--white);
+      padding: 12px 18px; border-radius: var(--radius);
+      font-size: 0.85rem; font-weight: 500;
+      box-shadow: var(--shadow-lg); max-width: 320px;
+      animation: toastIn 0.25s ease, toastOut 0.3s ease 2.8s forwards;
+    }
+    .toast--success { background: #166534; }
+    .toast--error { background: #7f1d1d; }
+
+    @keyframes toastIn  { from { opacity:0; transform: translateY(8px); } to { opacity:1; transform:none; } }
+    @keyframes toastOut { to   { opacity:0; transform: translateY(4px); } }
+
+    /* ==============================  SCROLL TO TOP  ============================== */
+    .scroll-top {
+      position: fixed; bottom: 28px; left: 28px; z-index: 1500;
+      width: 44px; height: 44px; border-radius: 50%;
+      background: var(--yellow); color: var(--dark);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; box-shadow: 0 4px 14px rgba(255,206,76,0.4);
+      opacity: 0; pointer-events: none; transition: all var(--transition);
+    }
+    .scroll-top.show { opacity: 1; pointer-events: all; }
+    .scroll-top:hover { background: var(--yellow-dark); transform: translateY(-2px); }
+
+    /* ==============================  MISC  ============================== */
+    .spinner {
+      display: inline-block; width: 16px; height: 16px;
+      border: 2px solid rgba(0,0,0,0.2); border-top-color: var(--dark);
+      border-radius: 50%; animation: spin 0.7s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .loading-slots {
+      grid-column: 1 / -1; text-align: center;
+      color: var(--gray); font-size: 0.85rem; padding: 16px 0;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ======= HEADER ======= -->
+<header id="header" class="header">
+  <div class="container header__inner">
+    <a href="#home" class="header__logo">
+      <span class="logo-re">Re</span><span class="logo-care">Care</span><span class="logo-gym"> GYM</span>
+    </a>
+    <nav class="header__nav" id="mainNav">
+      <ul class="nav__list">
+        <li><a href="#home"     class="nav__link">홈</a></li>
+        <li><a href="#trainers" class="nav__link">트레이너</a></li>
+        <li><a href="#contact"  class="nav__link">오시는 길</a></li>
+        <li><a href="#trainers" class="nav__cta">예약하기</a></li>
+      </ul>
+    </nav>
+    <button class="header__hamburger" id="hamburger" aria-label="메뉴">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- ======= HERO ======= -->
+<section id="home" class="hero">
+  <!-- Background Video with Image Fallback -->
+  <video 
+    class="hero__video-bg" 
+    autoplay 
+    muted 
+    loop 
+    playsinline
+    preload="metadata"
+    poster="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1600&h=900&fit=crop">
+    <source src="https://cdn.pexels.com/videos/3571476/pexels-video-3571476.mp4" type="video/mp4">
+    <!-- Fallback for browsers that don't support video -->
+    Your browser does not support the video tag.
+  </video>
+  
+  <!-- Overlay for text readability -->
+  <div class="hero__overlay"></div>
+  
+  <div class="container hero__inner">
+    <div class="hero__eyebrow">
+      <i class="fas fa-dumbbell"></i>
+      체형교정 · 재활 · PT 전문
+    </div>
+    <h1 class="hero__title">
+      당신의 몸,<br />
+      <em>제대로 케어</em>받아야<br />
+      진짜 변합니다
+    </h1>
+    <p class="hero__sub">
+      리케어짐은 단순한 헬스장이 아닙니다.<br />
+      전문 트레이너와 함께하는 1:1 맞춤 케어로<br />
+      건강하고 균형 잡힌 몸을 만들어 드립니다.
+    </p>
+    <div class="hero__actions">
+      <a href="#trainers" class="btn-hero-primary">
+        <i class="fas fa-calendar-check"></i>
+        트레이너 예약하기
+      </a>
+      <a href="#contact" class="btn-hero-outline">
+        <i class="fas fa-map-marker-alt"></i>
+        오시는 길
+      </a>
+    </div>
+    <div class="hero__stats">
+      <div>
+        <span class="hero__stat-num">15+</span>
+        <span class="hero__stat-label">전문 트레이너</span>
+      </div>
+      <div>
+        <span class="hero__stat-num">5년+</span>
+        <span class="hero__stat-label">평균 경력</span>
+      </div>
+      <div>
+        <span class="hero__stat-num">98%</span>
+        <span class="hero__stat-label">회원 만족도</span>
+      </div>
+      <div>
+        <span class="hero__stat-num">1:1</span>
+        <span class="hero__stat-label">맞춤 케어</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======= TRAINERS ======= -->
+<section id="trainers" class="trainers">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-eyebrow">Our Trainers</span>
+      <h2 class="section-title">전문 트레이너 소개</h2>
+      <p class="section-sub">각 분야 전문 트레이너가 당신의 목표에 맞는 맞춤 프로그램을 제공합니다.</p>
+    </div>
+    <div class="trainers-grid" id="trainersGrid">
+      <!-- JS로 렌더링 -->
+    </div>
+  </div>
+</section>
+
+<!-- ======= FEATURES ======= -->
+<section class="features">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-eyebrow">Why ReCare GYM</span>
+      <h2 class="section-title">리케어짐의 특별함</h2>
+      <p class="section-sub">최고의 트레이너와 시설로 당신의 건강한 변화를 응원합니다.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-image">
+          <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=500&h=300&fit=crop" alt="최신 운동기구" loading="lazy" />
+        </div>
+        <h3 class="feature-title">최신 운동기구</h3>
+        <p class="feature-desc">최첨단 피트니스 장비와 함께 효율적인 트레이닝을 경험하세요.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-image">
+          <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=500&h=300&fit=crop" alt="체형교정 프로그램" loading="lazy" />
+        </div>
+        <h3 class="feature-title">맞춤형 프로그램</h3>
+        <p class="feature-desc">각 개인의 목표와 체형에 맞춰 설계된 1:1 맞춤 프로그램을 제공합니다.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-image">
+          <img src="https://images.unsplash.com/photo-1576091160550-112173f7f869?w=500&h=300&fit=crop" alt="전문 트레이너" loading="lazy" />
+        </div>
+        <h3 class="feature-title">전문 트레이너</h3>
+        <p class="feature-desc">5년 이상의 경력을 가진 전문가들이 안전하고 효과적인 지도를 합니다.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-image">
+          <img src="https://images.unsplash.com/photo-1506157786151-b8491531f063?w=500&h=300&fit=crop" alt="쾌적한 환경" loading="lazy" />
+        </div>
+        <h3 class="feature-title">쾌적한 환경</h3>
+        <p class="feature-desc">청결하고 안전한 운동 환경으로 편안함을 느껴보세요.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======= FOOTER ======= -->
+<footer id="contact" class="footer">
+  <div class="container">
+    <div class="footer__inner">
+      <!-- 브랜드 -->
+      <div>
+        <div class="footer__logo">
+          <span class="logo-re">Re</span><span class="logo-care">Care</span><span class="logo-gym"> GYM</span>
+        </div>
+        <p class="footer__tagline">
+          체형교정 · 재활 · PT 전문<br />
+          리케어짐과 함께 건강한 변화를<br />시작하세요.
+        </p>
+      </div>
+
+      <!-- 연락처 & 위치 -->
+      <div>
+        <p class="footer__heading">Contact</p>
+        <ul class="footer__info-list">
+          <li class="footer__info-item">
+            <i class="fas fa-map-marker-alt"></i>
+            <span>서울특별시 OO구 OO동 OO빌딩 X층<br /><small style="opacity:0.6">(주소 업데이트 예정)</small></span>
+          </li>
+          <li class="footer__info-item">
+            <i class="fas fa-phone"></i>
+            <span>010-0000-0000</span>
+          </li>
+          <li class="footer__info-item">
+            <i class="fas fa-clock"></i>
+            <span>월–금 09:00 – 21:00<br />토 09:00 – 17:00 / 일 휴무</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- SNS -->
+      <div>
+        <p class="footer__heading">Follow Us</p>
+        <div class="footer__sns">
+          <a href="https://www.instagram.com/recaregym_official/" target="_blank" rel="noopener" class="footer__sns-link">
+            <i class="fab fa-instagram"></i>
+            Instagram
+          </a>
+          <a href="#" class="footer__sns-link" id="naverMapLink">
+            <i class="fas fa-map"></i>
+            네이버 지도
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      © 2026 ReCare GYM. All rights reserved.
+    </div>
+  </div>
+</footer>
+
+<!-- ======= BOOKING MODAL ======= -->
+<div class="modal-overlay" id="bookingModal" onclick="handleOverlayClick(event)">
+  <div class="modal" role="dialog" aria-modal="true">
+
+    <!-- Header -->
+    <div class="modal__header">
+      <div class="modal__trainer-info">
+        <p class="modal__title">트레이너 선택됨</p>
+        <p class="modal__trainer-name" id="modalTrainerName">—</p>
+      </div>
+      <button class="modal__close" onclick="closeModal()" aria-label="닫기">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <!-- Step indicator -->
+    <div class="step-indicator-wrap">
+      <div class="step-indicator-row step-indicator">
+        <div class="step-dot active" id="step-dot-1">1</div>
+        <div class="step-line" id="step-line-1"></div>
+        <div class="step-dot" id="step-dot-2">2</div>
+        <div class="step-line" id="step-line-2"></div>
+        <div class="step-dot" id="step-dot-3">3</div>
+      </div>
+      <div class="step-indicator-labels">
+        <span>날짜·시간</span>
+        <span>정보 입력</span>
+        <span>확인</span>
+      </div>
+    </div>
+
+    <!-- Step 1: 날짜 & 시간 -->
+    <div class="step-panel active" id="step-panel-1">
+      <div class="form-group">
+        <label class="form-label" for="bookDate">예약 날짜 <span>*</span></label>
+        <div class="date-input-wrap">
+          <input type="date" id="bookDate" class="form-input" onchange="loadTimeSlots()" />
+          <i class="fas fa-calendar"></i>
+        </div>
+      </div>
+
+      <p class="slot-label">예약 시간 선택</p>
+      <p class="slot-hint" id="slotHint">날짜를 먼저 선택해 주세요</p>
+      <div class="time-slots-grid" id="timeSlots"></div>
+
+      <button class="btn-modal-primary" style="margin-top:24px" onclick="goStep(2)">
+        다음 단계 <i class="fas fa-arrow-right"></i>
+      </button>
+    </div>
+
+    <!-- Step 2: 정보 입력 -->
+    <div class="step-panel" id="step-panel-2">
+      <div class="form-group">
+        <label class="form-label" for="bookName">이름 <span>*</span></label>
+        <input type="text" id="bookName" class="form-input" placeholder="홍길동" />
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="bookPhone">연락처 <span>*</span></label>
+        <input type="tel" id="bookPhone" class="form-input" placeholder="010-0000-0000" />
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="bookMessage">문의사항 <small style="font-weight:400;color:var(--gray)">(선택)</small></label>
+        <textarea id="bookMessage" class="form-textarea" placeholder="통증 부위, 목표, 특이사항 등을 적어주세요"></textarea>
+      </div>
+      <div class="checkbox-wrap">
+        <input type="checkbox" id="bookAgree" />
+        <label for="bookAgree">개인정보(이름, 연락처)를 예약 목적으로 수집·이용하는 것에 동의합니다.</label>
+      </div>
+
+      <button class="btn-modal-primary" onclick="goStep(3)">
+        예약 내용 확인 <i class="fas fa-arrow-right"></i>
+      </button>
+      <button class="btn-modal-back" onclick="goStep(1)">
+        <i class="fas fa-arrow-left"></i> 이전
+      </button>
+    </div>
+
+    <!-- Step 3: 확인 -->
+    <div class="step-panel" id="step-panel-3">
+      <div class="confirm-summary">
+        <div class="confirm-row">
+          <label>트레이너</label>
+          <span id="confirm-trainer">—</span>
+        </div>
+        <div class="confirm-row">
+          <label>예약 날짜</label>
+          <span id="confirm-date">—</span>
+        </div>
+        <div class="confirm-row">
+          <label>예약 시간</label>
+          <span id="confirm-time">—</span>
+        </div>
+        <div class="confirm-row">
+          <label>이름</label>
+          <span id="confirm-name">—</span>
+        </div>
+        <div class="confirm-row">
+          <label>연락처</label>
+          <span id="confirm-phone">—</span>
+        </div>
+      </div>
+
+      <button class="btn-modal-primary" id="submitBookingBtn" onclick="submitBooking()">
+        <i class="fas fa-calendar-check"></i> 예약 요청하기
+      </button>
+      <button class="btn-modal-back" onclick="goStep(2)">
+        <i class="fas fa-arrow-left"></i> 이전
+      </button>
+    </div>
+
+    <!-- Success -->
+    <div class="step-panel" id="step-panel-success">
+      <div class="success-panel">
+        <div class="success-icon"><i class="fas fa-check"></i></div>
+        <p class="success-title">예약 요청 완료!</p>
+        <p class="success-msg">예약 요청이 접수되었습니다.<br />트레이너 확인 후 확정 안내 연락을 드립니다.</p>
+        <div class="success-note">
+          <strong>안내사항</strong><br />
+          예약 확정은 트레이너 확인 후 이메일 또는 연락처로 안내드립니다. 문의사항은 인스타그램 DM이나 전화로 연락해 주세요.
+        </div>
+        <button class="btn-modal-primary" onclick="closeModal()">
+          확인
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Toast container -->
+<div id="toastContainer"></div>
+
+<!-- Scroll-to-top -->
+<button class="scroll-top" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="맨 위로">
+  <i class="fas fa-chevron-up"></i>
+</button>
+
+<script>
+/* ============================================================
+   CONFIG — Google Apps Script 배포 후 URL 교체
+============================================================ */
+const APPS_SCRIPT_URL = 'YOUR_APPS_SCRIPT_WEB_APP_URL';
+
+/* ============================================================
+   TRAINER DATA (더미 데이터 — 실제 정보로 교체 예정)
+============================================================ */
+const TRAINERS = [
+  { id: 't01', name: '김민준', specialty: ['체형교정', 'PT'],          intro: '체형 분석 전문가. 자세 교정부터 기능 회복까지 체계적으로 도와드립니다.', email: '' },
+  { id: 't02', name: '이서연', specialty: ['재활', '필라테스'],         intro: '재활 운동 전문가. 부상 후 안전하고 빠른 기능 회복을 함께합니다.', email: '' },
+  { id: 't03', name: '박지훈', specialty: ['다이어트', 'PT'],           intro: '체계적인 식단 관리와 운동 프로그램으로 건강한 감량을 도와드립니다.', email: '' },
+  { id: 't04', name: '최유진', specialty: ['체형교정', '필라테스'],      intro: '잘못된 자세와 체형 불균형을 바로잡는 코어 중심 필라테스 전문가.', email: '' },
+  { id: 't05', name: '정다은', specialty: ['재활', '스포츠'],           intro: '스포츠 재활 전문으로 선수 출신의 섬세한 케어로 빠른 복귀를 돕습니다.', email: '' },
+  { id: 't06', name: '한승우', specialty: ['PT', '근력강화'],           intro: '근력 강화와 벌크업 전문. 과학적인 프로그래밍으로 탄탄한 몸을 만듭니다.', email: '' },
+  { id: 't07', name: '임채원', specialty: ['중장년', '재활'],           intro: '중장년층 전문 케어. 관절 건강과 활동성 유지를 위한 맞춤 운동을 제공합니다.', email: '' },
+  { id: 't08', name: '오지수', specialty: ['다이어트', '체형교정'],      intro: '바디프로필 준비와 다이어트 전문가. 원하는 몸매로 변화를 이끌어 드립니다.', email: '' },
+  { id: 't09', name: '윤도현', specialty: ['스포츠', 'PT'],            intro: '스포츠 퍼포먼스 향상 전문. 실전 체력과 기능성 강화 트레이닝을 제공합니다.', email: '' },
+  { id: 't10', name: '강혜린', specialty: ['필라테스', '체형교정'],      intro: '코어 강화와 체형 교정을 위한 맞춤 필라테스로 균형 잡힌 몸을 만듭니다.', email: '' },
+  { id: 't11', name: '송민호', specialty: ['재활', 'PT'],              intro: '통증 해결부터 기능 강화까지 단계적인 재활 트레이닝 전문가.', email: '' },
+  { id: 't12', name: '배수아', specialty: ['다이어트', '중장년'],        intro: '여성 건강과 체형 관리 전문. 무리 없는 건강하고 지속 가능한 변화.', email: '' },
+  { id: 't13', name: '노준혁', specialty: ['근력강화', '스포츠'],        intro: '고강도 기능성 트레이닝으로 최상의 운동 퍼포먼스를 이끌어냅니다.', email: '' },
+  { id: 't14', name: '황지영', specialty: ['체형교정', '재활'],         intro: '자세 불균형 교정과 만성 통증 개선을 위한 전문 트레이너.', email: '' },
+  { id: 't15', name: '문태양', specialty: ['PT', '다이어트'],          intro: '빠른 변화보다 건강하고 지속 가능한 몸을 만들어 드립니다.', email: '' },
+];
+
+// 아바타 배경 색상 (노란색 계열 + 진한 계열 조화)
+const AVATAR_COLORS = [
+  ['#ffce4c','#111827'], ['#111827','#ffce4c'], ['#fde68a','#111827'],
+  ['#1f2937','#ffce4c'], ['#fbbf24','#111827'], ['#374151','#fff9e6'],
+  ['#ffce4c','#1f2937'], ['#111827','#fde68a'], ['#f59e0b','#111827'],
+  ['#1f2937','#fbbf24'], ['#ffce4c','#374151'], ['#374151','#ffce4c'],
+  ['#fde68a','#1f2937'], ['#111827','#f59e0b'], ['#fbbf24','#1f2937'],
+];
+
+// 트레이너 프로필 사진 (Unsplash 무료 이미지)
+const TRAINER_PHOTOS = [
+  'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop',
+  'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop',
+  'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop',
+  'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop',
+  'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop',
+  'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&h=400&fit=crop',
+  'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop',
+  'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop',
+  'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop',
+  'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop',
+  'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop',
+  'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop',
+  'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&h=400&fit=crop',
+  'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop',
+  'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop',
+];
+
+/* ============================================================
+   STATE
+============================================================ */
+let currentTrainer  = null;
+let selectedTime    = null;
+let currentStep     = 1;
+
+/* ============================================================
+   INIT
+============================================================ */
+document.addEventListener('DOMContentLoaded', () => {
+  initHeader();
+  renderTrainers();
+  initDatePicker();
+  initScrollTop();
+});
+
+/* ============================================================
+   HEADER
+============================================================ */
+function initHeader() {
+  const header    = document.getElementById('header');
+  const hamburger = document.getElementById('hamburger');
+  const nav       = document.getElementById('mainNav');
+
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('scrolled', window.scrollY > 30);
+  });
+
+  hamburger.addEventListener('click', () => {
+    nav.classList.toggle('open');
+    hamburger.classList.toggle('open');
+  });
+
+  // 모바일 nav 링크 클릭 시 닫기
+  nav.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      nav.classList.remove('open');
+      hamburger.classList.remove('open');
+    });
+  });
+}
+
+/* ============================================================
+   SCROLL TOP
+============================================================ */
+function initScrollTop() {
+  const btn = document.getElementById('scrollTopBtn');
+  window.addEventListener('scroll', () => {
+    btn.classList.toggle('show', window.scrollY > 400);
+  });
+}
+
+/* ============================================================
+   RENDER TRAINERS
+============================================================ */
+function renderTrainers() {
+  const grid = document.getElementById('trainersGrid');
+  grid.innerHTML = TRAINERS.map((t, i) => renderCard(t, i)).join('');
+}
+
+function renderCard(t, i) {
+  const photoUrl = TRAINER_PHOTOS[i % TRAINER_PHOTOS.length];
+  const [bgColor, textColor] = AVATAR_COLORS[i % AVATAR_COLORS.length];
+  const initials = t.name.slice(0, 1);
+  const tags = t.specialty.map(s => `<span class="tc__tag">${escHtml(s)}</span>`).join('');
+
+  return `
+    <div class="trainer-card">
+      <div class="tc__photo-wrap">
+        <img src="${photoUrl}" alt="${escHtml(t.name)} 트레이너 사진" class="tc__photo" loading="lazy" onerror="this.style.display='none'" />
+      </div>
+      <div class="tc__avatar-wrap">
+        <div class="tc__avatar" style="background:${bgColor};color:${textColor}">
+          ${initials}
+        </div>
+        <div class="tc__name-wrap">
+          <p class="tc__name">${escHtml(t.name)} 트레이너</p>
+          <span class="tc__role-badge">ReCare GYM</span>
+        </div>
+      </div>
+      <div class="tc__body">
+        <div class="tc__tags">${tags}</div>
+        <p class="tc__intro">${escHtml(t.intro)}</p>
+        <button class="tc__book-btn" onclick='openBookingModal(${JSON.stringify(t)})'>
+          <i class="fas fa-calendar-plus"></i>
+          예약하기
+        </button>
+      </div>
+    </div>`;
+}
+
+/* ============================================================
+   DATE PICKER
+============================================================ */
+function initDatePicker() {
+  const today = new Date();
+  const yyyy  = today.getFullYear();
+  const mm    = String(today.getMonth() + 1).padStart(2, '0');
+  const dd    = String(today.getDate()).padStart(2, '0');
+  const input = document.getElementById('bookDate');
+  if (input) input.min = `${yyyy}-${mm}-${dd}`;
+}
+
+/* ============================================================
+   BOOKING MODAL
+============================================================ */
+function openBookingModal(trainer) {
+  currentTrainer = trainer;
+  selectedTime   = null;
+
+  document.getElementById('modalTrainerName').textContent = trainer.name + ' 트레이너';
+  document.getElementById('bookDate').value    = '';
+  document.getElementById('timeSlots').innerHTML = '';
+  document.getElementById('slotHint').textContent = '날짜를 먼저 선택해 주세요';
+  document.getElementById('bookName').value    = '';
+  document.getElementById('bookPhone').value   = '';
+  document.getElementById('bookMessage').value = '';
+  document.getElementById('bookAgree').checked = false;
+
+  setStep(1);
+  document.getElementById('bookingModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('bookingModal').classList.remove('open');
+  document.body.style.overflow = '';
+  currentTrainer = null;
+  selectedTime   = null;
+}
+
+function handleOverlayClick(e) {
+  if (e.target === document.getElementById('bookingModal')) closeModal();
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeModal();
+});
+
+/* ============================================================
+   STEP NAVIGATION
+============================================================ */
+function setStep(step) {
+  currentStep = step;
+
+  ['1','2','3','success'].forEach(s => {
+    document.getElementById(`step-panel-${s}`)?.classList.toggle('active', s === String(step));
+  });
+
+  [1, 2, 3].forEach(i => {
+    const dot = document.getElementById(`step-dot-${i}`);
+    if (!dot) return;
+    dot.classList.toggle('active', i === step);
+    dot.classList.toggle('done',   i < step);
+  });
+  [1, 2].forEach(i => {
+    document.getElementById(`step-line-${i}`)?.classList.toggle('done', i < step);
+  });
+}
+
+function goStep(target) {
+  if (target === 2) {
+    if (!document.getElementById('bookDate').value) {
+      showToast('예약 날짜를 선택해 주세요.', 'error'); return;
+    }
+    if (!selectedTime) {
+      showToast('예약 시간을 선택해 주세요.', 'error'); return;
+    }
+    setStep(2);
+  } else if (target === 3) {
+    const name  = document.getElementById('bookName').value.trim();
+    const phone = document.getElementById('bookPhone').value.trim();
+    const agree = document.getElementById('bookAgree').checked;
+
+    if (!name)  { showToast('이름을 입력해 주세요.', 'error'); return; }
+    if (!phone || !/^[\d\-+]{9,14}$/.test(phone.replace(/\s/g,''))) {
+      showToast('올바른 연락처를 입력해 주세요.', 'error'); return;
+    }
+    if (!agree) { showToast('개인정보 수집에 동의해 주세요.', 'error'); return; }
+
+    // 확인 요약 채우기
+    document.getElementById('confirm-trainer').textContent = currentTrainer.name + ' 트레이너';
+    document.getElementById('confirm-date').textContent    = formatDateKr(document.getElementById('bookDate').value);
+    document.getElementById('confirm-time').textContent    = selectedTime + ' (1시간)';
+    document.getElementById('confirm-name').textContent    = name;
+    document.getElementById('confirm-phone').textContent   = phone;
+
+    setStep(3);
+  } else {
+    setStep(target);
+  }
+}
+
+/* ============================================================
+   TIME SLOTS
+============================================================ */
+function loadTimeSlots() {
+  const dateVal = document.getElementById('bookDate').value;
+  if (!dateVal || !currentTrainer) return;
+
+  const container = document.getElementById('timeSlots');
+  const hint      = document.getElementById('slotHint');
+  selectedTime    = null;
+
+  // 요일 체크 (일요일=0 휴무)
+  const day = new Date(dateVal + 'T12:00:00').getDay();
+  if (day === 0) {
+    container.innerHTML = `<div class="loading-slots" style="color:var(--danger)"><i class="fas fa-times-circle"></i> 일요일은 휴무입니다. 다른 날짜를 선택해 주세요.</div>`;
+    hint.textContent = '휴무일';
+    return;
+  }
+
+  // 슬롯 생성 (09:00 ~ 21:00, 1시간 단위)
+  const slotEnd = day === 6 ? '17:00' : '21:00'; // 토요일은 17시까지
+  const slots   = generateSlots('09:00', slotEnd, 60);
+
+  hint.textContent = `${slots.length}개 슬롯`;
+  container.innerHTML = slots.map(slot => {
+    const past = isSlotPast(dateVal, slot);
+    return `<button
+      class="time-slot${past ? ' booked' : ''}"
+      ${past ? 'disabled' : ''}
+      onclick="selectSlot(this,'${slot}')">
+      ${slot}
+    </button>`;
+  }).join('');
+}
+
+function generateSlots(start, end, durMin) {
+  const slots = [];
+  let [sh, sm] = start.split(':').map(Number);
+  const [eh, em] = end.split(':').map(Number);
+  let cur    = sh * 60 + sm;
+  const endM = eh * 60 + em;
+  while (cur + durMin <= endM) {
+    const h = String(Math.floor(cur / 60)).padStart(2, '0');
+    const m = String(cur % 60).padStart(2, '0');
+    slots.push(`${h}:${m}`);
+    cur += durMin;
+  }
+  return slots;
+}
+
+function isSlotPast(dateStr, timeStr) {
+  return new Date(`${dateStr}T${timeStr}:00`) <= new Date();
+}
+
+function selectSlot(btn, time) {
+  document.querySelectorAll('.time-slot.selected').forEach(el => el.classList.remove('selected'));
+  btn.classList.add('selected');
+  selectedTime = time;
+}
+
+/* ============================================================
+   SUBMIT BOOKING → Apps Script
+============================================================ */
+async function submitBooking() {
+  const btn = document.getElementById('submitBookingBtn');
+  if (!btn || btn.disabled) return;
+
+  btn.disabled = true;
+  btn.innerHTML = '<div class="spinner"></div> 처리 중...';
+
+  const payload = {
+    trainer_id:     currentTrainer.id,
+    trainer_name:   currentTrainer.name,
+    trainer_email:  currentTrainer.email || '',
+    booking_date:   document.getElementById('bookDate').value,
+    booking_time:   selectedTime,
+    customer_name:  document.getElementById('bookName').value.trim(),
+    customer_phone: document.getElementById('bookPhone').value.trim(),
+    message:        document.getElementById('bookMessage').value.trim(),
+    status:         '대기중',
+  };
+
+  try {
+    // Apps Script URL이 설정되지 않은 경우 (데모 모드)
+    if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL === 'YOUR_APPS_SCRIPT_WEB_APP_URL') {
+      await new Promise(r => setTimeout(r, 800)); // 로딩 느낌
+      console.log('📋 예약 데이터 (Apps Script 미연결):', payload);
+      showSuccessPanel();
+      return;
+    }
+
+    const res = await fetch(APPS_SCRIPT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+
+    if (!res.ok) throw new Error('서버 오류');
+    showSuccessPanel();
+
+  } catch (e) {
+    console.error(e);
+    showToast('예약 처리 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.', 'error');
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fas fa-calendar-check"></i> 예약 요청하기';
+  }
+}
+
+function showSuccessPanel() {
+  ['step-panel-1','step-panel-2','step-panel-3'].forEach(id => {
+    document.getElementById(id)?.classList.remove('active');
+  });
+  document.getElementById('step-panel-success').classList.add('active');
+  [1,2,3].forEach(i => {
+    const dot = document.getElementById(`step-dot-${i}`);
+    dot?.classList.remove('active');
+    dot?.classList.add('done');
+  });
+  [1,2].forEach(i => document.getElementById(`step-line-${i}`)?.classList.add('done'));
+}
+
+/* ============================================================
+   UTILITIES
+============================================================ */
+function formatDateKr(dateStr) {
+  if (!dateStr) return '-';
+  const d    = new Date(dateStr + 'T12:00:00');
+  const days = ['일','월','화','수','목','금','토'];
+  return `${d.getFullYear()}년 ${d.getMonth()+1}월 ${d.getDate()}일 (${days[d.getDay()]})`;
+}
+
+function escHtml(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+
+function showToast(msg, type = '') {
+  const container = document.getElementById('toastContainer');
+  const el = document.createElement('div');
+  el.className = `toast${type ? ' toast--' + type : ''}`;
+  el.textContent = msg;
+  container.appendChild(el);
+  setTimeout(() => el.remove(), 3200);
+}
+</script>
+</body>
+</html>
