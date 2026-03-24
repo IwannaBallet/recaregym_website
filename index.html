@@ -101,40 +101,42 @@
       .nav__cta { margin-left: 0; margin-top: 8px; display: inline-block; }
     }
 
+    /* ==============================  VIDEO HERO  ============================== */
+    .video-hero {
+      margin-top: 66px; /* offset for fixed header */
+      width: 100%;
+      line-height: 0;
+    }
+    .video-hero video {
+      width: 100%;
+      display: block;
+      max-height: 80vh;
+      object-fit: cover;
+    }
+
     /* ==============================  HERO  ============================== */
     .hero {
-      background: linear-gradient(135deg, rgba(17,24,39,0.88) 0%, rgba(17,24,39,0.92) 100%), 
-                  url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1600&h=900&fit=crop') center/cover;
-      padding: 140px 0 80px;
+      background: linear-gradient(135deg, var(--dark) 0%, var(--dark2) 100%);
+      padding: 80px 0;
       position: relative; overflow: hidden;
-      min-height: 600px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
     }
-    
-    .hero__video-bg {
-      position: absolute;
-      top: 0; left: 0; width: 100%; height: 100%;
-      object-fit: cover;
+
+    /* gym.jpg background at low opacity */
+    .hero__bg-img {
+      position: absolute; inset: 0;
+      background: url('gym.jpg') center/cover no-repeat;
+      opacity: 0.12;
+      pointer-events: none;
       z-index: 0;
     }
-    
-    .hero__overlay {
-      position: absolute;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: linear-gradient(135deg, rgba(17,24,39,0.88) 0%, rgba(17,24,39,0.92) 100%);
-      z-index: 1;
-      pointer-events: none;
-    }
-    
+
     .hero::before {
       content: '';
       position: absolute; top: -60px; right: -60px;
       width: 480px; height: 480px;
       background: radial-gradient(circle, rgba(255,206,76,0.18) 0%, transparent 70%);
       pointer-events: none;
-      z-index: 2;
+      z-index: 1;
     }
     .hero::after {
       content: '';
@@ -142,10 +144,10 @@
       width: 360px; height: 360px;
       background: radial-gradient(circle, rgba(255,206,76,0.10) 0%, transparent 70%);
       pointer-events: none;
-      z-index: 2;
+      z-index: 1;
     }
 
-    .hero__inner { position: relative; z-index: 3; }
+    .hero__inner { position: relative; z-index: 2; }
 
     .hero__eyebrow {
       display: inline-flex; align-items: center; gap: 8px;
@@ -204,7 +206,7 @@
     .hero__stat-label { font-size: 0.82rem; color: rgba(255,255,255,0.5); margin-top: 2px; }
 
     @media (max-width: 600px) {
-      .hero { padding: 120px 0 60px; }
+      .hero { padding: 60px 0 50px; }
       .hero__stats { gap: 20px; }
       .hero__stat-num { font-size: 1.6rem; }
     }
@@ -656,24 +658,15 @@
 </header>
 
 <!-- ======= HERO ======= -->
-<section id="home" class="hero">
-  <!-- Background Video with Image Fallback -->
-  <video 
-    class="hero__video-bg" 
-    autoplay 
-    muted 
-    loop 
-    playsinline
-    preload="metadata"
-    poster="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1600&h=900&fit=crop">
-    <source src="https://cdn.pexels.com/videos/3571476/pexels-video-3571476.mp4" type="video/mp4">
-    <!-- Fallback for browsers that don't support video -->
-    Your browser does not support the video tag.
+<!-- Full-width video at top -->
+<div id="home" class="video-hero">
+  <video autoplay muted loop playsinline preload="metadata">
+    <source src="sample_video.mp4" type="video/mp4">
   </video>
-  
-  <!-- Overlay for text readability -->
-  <div class="hero__overlay"></div>
-  
+</div>
+
+<section class="hero">
+  <div class="hero__bg-img"></div>
   <div class="container hero__inner">
     <div class="hero__eyebrow">
       <i class="fas fa-dumbbell"></i>
@@ -759,7 +752,7 @@
       </div>
       <div class="feature-card">
         <div class="feature-image">
-          <img src="https://images.unsplash.com/photo-1576091160550-112173f7f869?w=500&h=300&fit=crop" alt="전문 트레이너" loading="lazy" />
+          <img src="Personal_trainer.webp" alt="전문 트레이너" loading="lazy" />
         </div>
         <h3 class="feature-title">전문 트레이너</h3>
         <p class="feature-desc">5년 이상의 경력을 가진 전문가들이 안전하고 효과적인 지도를 합니다.</p>
